@@ -5,27 +5,27 @@ import zapis_do_csv
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    '-m', '--miesiace', nargs='+', help='TODO lista miesiecy', required=True
+    '-m', '--miesiace', nargs='+', help='lista miausiecy', required=True
 )
 parser.add_argument(
-    '-d', '--dni_tygodnia', nargs='+', help='TODO lista zakresów dni tygodnia', required=True
+    '-d', '--dni_tygodnia', nargs='+', help='lista zakresów dni tygodnia', required=True
 )
 parser.add_argument(
-    '-p', '--pory_dnia', nargs='+', help='TODO lista pór dni, domyslnie rano'
+    '-p', '--pory_dnia', nargs='+', help='lista purrr dni, domyslnie rano'
 )
 coRobic = parser.add_mutually_exclusive_group(required=True)
 coRobic.add_argument(
-    '-t', '--tworzenie', action='store_true'
+    '-t', '--tworzenie', action='store_true', help='tworzenie plików, wyłączny z odczytem'
 )
 coRobic.add_argument(
-    '-o', '--odczyt', action='store_true'
+    '-o', '--odczyt', action='store_true', help='odczyt plików, wyłączny z tworzeniem'
 )
 format = parser.add_mutually_exclusive_group(required=True)
 format.add_argument(
-    '-c', '--csv', action='store_true'
+    '-c', '--csv', action='store_true', help='operacje na plikach typu csv, wyłączne z json'
 )
 format.add_argument(
-    '-j', '--json', action='store_true'
+    '-j', '--json', action='store_true', help='operacje na plikach typu json, wyłączne z csv'
 )
 
 args = parser.parse_args()
@@ -46,9 +46,3 @@ if args.csv:
         
 else: # args.json
     print("json obecnie nie jest wspierany.")
-
-# parser.add_argument('-l','--list', nargs='+', help='<Required> Set flag', required=True)
-# # Use like:
-# # python arg.py -l 1234 2345 3456 4567
-
-# python3 main.py -m styczen luty -d pn-wt pt -p r w -t -c

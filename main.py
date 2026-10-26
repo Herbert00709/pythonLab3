@@ -1,7 +1,7 @@
 import argparse
 import paths as Paths
 import pathlib
-import zapis_do_csv
+import manage_csv
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -36,11 +36,11 @@ if args.csv:
     if args.tworzenie:
         for path in paths:
             path.mkdir(parents=True, exist_ok=True)
-            zapis_do_csv.zapis_do_csv(path)
+            manage_csv.write_to_csv(path)
     else: # args.odczyt
         sum = 0
         for path in paths:
-            sum += zapis_do_csv.odczyt_z_csv(path)
+            sum += manage_csv.read_from(path)
             
         print(f"Suma czasów modeli A: {sum}")
         

@@ -12,14 +12,15 @@ DAYS = {
 
 
 def create_day_names_from_range(day_range):
-    first_and_last = day_range.split("-")
+    first_and_last = day_range.split('-')
     if len(first_and_last) == 1:
         if first_and_last[0] not in DAYS:
             raise ValueError(f"Invalid range: {day_range}")
         return [DAYS[first_and_last[0]]]
+    
     elif len(first_and_last) == 2:
-        first = first_and_last[0]
-        last = first_and_last[1]
+        first, last = first_and_last
+        
         if first not in DAYS or last not in DAYS:
             raise ValueError(f"Invalid range: {day_range}")
         keys_of_days = list(DAYS.keys())
@@ -27,13 +28,13 @@ def create_day_names_from_range(day_range):
         j = keys_of_days.index(last)
         if i > j:
             raise ValueError(f"Invalid order in range: {day_range}")
+
         ans = []
         for k in keys_of_days[i : j + 1]:
             ans.append(DAYS[k])
         return ans
     else:
         raise ValueError(f"Invalid range: {day_range}")
-
 
 def create_path(months, day_ranges, times_of_days):
     if len(months) != len(day_ranges):
@@ -50,11 +51,8 @@ def create_path(months, day_ranges, times_of_days):
                 time_of_day = "r"
             if time_of_day not in ("r", "w"):
                 raise ValueError(f"Invalid time of day: {time_of_day}")
-
-            if time_of_day == "r":
-                name_of_time_of_day = "rano"
-            else:
-                name_of_time_of_day = "wieczorem"
+            
+            name_of_time_of_day = 'rano' if time_of_day == "r" else 'wieczorem'
 
             p = Path(month.capitalize()) / day / name_of_time_of_day
 

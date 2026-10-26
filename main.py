@@ -3,6 +3,8 @@ import paths as Paths
 import pathlib
 import manage_csv
 
+dir = "Dane"
+
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '-m', '--miesiace', nargs='+', help='lista miausiecy', required=True
@@ -13,11 +15,11 @@ parser.add_argument(
 parser.add_argument(
     '-p', '--pory_dnia', nargs='+', help='lista purrr dni, domyslnie rano'
 )
-coRobic = parser.add_mutually_exclusive_group(required=True)
-coRobic.add_argument(
+commandType = parser.add_mutually_exclusive_group(required=True)
+commandType.add_argument(
     '-t', '--tworzenie', action='store_true', help='tworzenie plików, wyłączny z odczytem'
 )
-coRobic.add_argument(
+commandType.add_argument(
     '-o', '--odczyt', action='store_true', help='odczyt plików, wyłączny z tworzeniem'
 )
 format = parser.add_mutually_exclusive_group(required=True)
@@ -33,6 +35,8 @@ args = parser.parse_args()
 if args.csv:
     paths = Paths.create_path(args.miesiace, args.dni_tygodnia, args.pory_dnia)
 
+    paths = [dir/path for path in paths]
+
     if args.tworzenie:
         for path in paths:
             path.mkdir(parents=True, exist_ok=True)
@@ -40,9 +44,9 @@ if args.csv:
     else: # args.odczyt
         sum = 0
         for path in paths:
-            sum += manage_csv.read_from(path)
+            sum += manage_csv.read_from_csv(path)
             
         print(f"Suma czasów modeli A: {sum}")
         
 else: # args.json
-    print("json obecnie nie jest wspierany.")
+    print("Json obecnie nie jest wspierany.")

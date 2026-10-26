@@ -11,7 +11,7 @@ DAYS = {
 }
 
 
-def create_day_names_from_range(day_range):
+def create_day_names_from_range(day_range: str) ->  list[str]:
     first_and_last = day_range.split('-')
     if len(first_and_last) == 1:
         if first_and_last[0] not in DAYS:
@@ -36,9 +36,10 @@ def create_day_names_from_range(day_range):
     else:
         raise ValueError(f"Invalid range: {day_range}")
 
-def create_path(months, day_ranges, times_of_days):
+def create_path(months: list[str], day_ranges: list[str], 
+                times_of_days: list[str]) -> list[Path]:
     if len(months) != len(day_ranges):
-        raise ValueError("number of day ranges must be equal to number of months")
+        raise ValueError("Number of day ranges must be equal to number of months.")
 
     paths = []
     index_of_time_of_day = 0
@@ -60,7 +61,7 @@ def create_path(months, day_ranges, times_of_days):
             index_of_time_of_day += 1
 
     if len(times_of_days) > index_of_time_of_day:
-        raise ValueError("too many times of days")
+        raise ValueError("Too many times of days.")
 
     return paths
 

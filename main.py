@@ -1,4 +1,7 @@
 import argparse
+import paths as Paths
+import pathlib
+import zapis_do_csv
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -27,8 +30,22 @@ format.add_argument(
 
 args = parser.parse_args()
 
-print(args);
+if args.csv:
+    paths = Paths.create_path(args.miesiace, args.dni_tygodnia, args.pory_dnia)
 
+    if args.tworzenie:
+        for path in paths:
+            path.mkdir(parents=True, exist_ok=True)
+            zapis_do_csv.zapis_do_csv(path)
+    else: # args.odczyt
+        sum = 0
+        for path in paths:
+            sum += zapis_do_csv.odczyt_z_csv(path)
+            
+        print(f"Suma czasów modeli A: {sum}")
+        
+else: # args.json
+    print("json obecnie nie jest wspierany.")
 
 # parser.add_argument('-l','--list', nargs='+', help='<Required> Set flag', required=True)
 # # Use like:
